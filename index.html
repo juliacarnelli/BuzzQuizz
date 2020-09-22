@@ -55,17 +55,39 @@
                 <li class="perguntas">
                     <p class="num-pergunta">Pergunta 1</p>
                     <input placeholder="Digite a Pergunta" class="enunciado-pergunta">
-                    <div>
-                        <input type="text" placeholder="Digite a Resposta Correta" class="resposta-pergunta">
-                        <input type="text" placeholder="Link imagem correta" class="resposta-pergunta">
-                        <input type="text" placeholder="Digite a Resposta Correta" class="resposta-pergunta">
-                        <input type="text" placeholder="Link imagem correta" class="resposta-pergunta">
-                        <input type="text" placeholder="Digite a Resposta Correta" class="resposta-pergunta">
-                        <input type="text" placeholder="Link imagem correta" class="resposta-pergunta">
-                        <input type="text" placeholder="Digite a Resposta Correta" class="resposta-pergunta">
-                        <input type="text" placeholder="Link imagem correta" class="resposta-pergunta">
+                    <div class="container-resposta-e-imagem">
+                        <div class="resposta-e-imagem">
+                            <input type="text" placeholder="Digite a Resposta Correta" class="resposta-pergunta correta">
+                            <input type="text" placeholder="Link imagem correta" class="resposta-pergunta correta">
+                        </div>
+                        <div class="resposta-e-imagem">
+                            <input type="text" placeholder="Digite a Resposta Errada 1" class="resposta-pergunta errada">
+                            <input type="text" placeholder="Link imagem errada 1" class="resposta-pergunta errada">
+                        </div>
+                        <div class="resposta-e-imagem">
+                            <input type="text" placeholder="Digite a Resposta Errada 2" class="resposta-pergunta errada">
+                            <input type="text" placeholder="Link imagem Errada 2" class="resposta-pergunta errada">
+                        </div>
+                        <div class="resposta-e-imagem">
+                            <input type="text" placeholder="Digite a Resposta Errada 3" class="resposta-pergunta errada">
+                            <input type="text" placeholder="Link imagem Errada 3" class="resposta-pergunta errada">
+                        </div>
                     </div>
                 </li>
+                <ion-icon name="add-circle" class="adicionar-perguntas" onclick="adicionarPerguntas();"></ion-icon>
+            </ul>
+            <ul class="niveis-acerto">
+                <li class="perguntas">
+                    <p class="num-pergunta">Nivel 1</p>
+                    <div class="entre-acertos">
+                        <input type="text" placeholder="Digite a Resposta Errada 3" class="resposta-pergunta">
+                        <input type="text" placeholder="Link imagem Errada 3" class="resposta-pergunta">
+                    </div>
+                    <input placeholder="Digite a Pergunta" class="titulo-nivel">
+                    <input placeholder="Digite a Pergunta" class="url-img-nivel">
+                    <input placeholder="Digite a Pergunta" class="descricao-nivel">
+                </li>
+                <ion-icon name="add-circle" class="adicionar-perguntas" onclick="adicionarNiveis();"></ion-icon>
             </ul>
         </div>
     </section>
