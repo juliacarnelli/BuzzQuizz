@@ -1,0 +1,41 @@
+.criacao-quiz{
+    position: absolute;
+    /*visibility: hidden;*/
+    left:0;
+    right:0;
+    top:0;
+    margin-left:auto;
+    margin-right:auto;
+    font-family: 'Roboto', sans-serif;  
+}
+
+.perguntas{
+    border-radius: 5px;
+}
+
+.container-perguntas{
+    width: 500px;
+    margin: 20px auto;
+    padding:20px;
+}
+
+.lista-perguntas{
+    width: 100%;
+    display: flex;
+    border-radius: 5px;
+    background: blue;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.titulo, .enunciado-pergunta{
+    width: 100%;
+    height: 30px;
+    margin-bottom: 10px;
+}
+
+.resposta-pergunta{
+    width: 49%;
+    height: 30px;
+}

@@ -41,10 +41,13 @@ function irParaTelaAdmin() {
     elemento.style.visibility = "hidden";
     elemento = document.querySelector(".admin-quizzes");
     elemento.style.visibility = "visible";
+    pegarTestesUser(token);
 }
 
 function loginSucesso (resposta){
     token = resposta.data.token;
+    //header["User-Token"] = token;
+    //console.log(header);
     irParaTelaAdmin();
     habilitarBotao();
 }
@@ -54,4 +57,29 @@ function loginIncorreto (erro){
         alert("E-mail ou senha incorretos");
     }
     habilitarBotao();
+}
+
+
+function pegarTestesUser(token){
+    var quizzes = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v1/buzzquizz/quizzes", { 
+        headers: {
+            "User-Token": token     
+        }
+    });
+    quizzes.then(teste1).catch(teste2);
+}
+
+function teste1(resposta){
+    console.log(resposta);
+}
+
+function teste2(erro){
+    console.log(erro);
+}
+
+function criarQuiz(){
+    var elemento = document.querySelector(".admin-quizzes");
+    elemento.style.visibility = "hidden";
+    elemento = document.querySelector(".criacao-quiz");
+    elemento.style.visibility = "visible";   
 }

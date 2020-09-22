@@ -5,7 +5,60 @@
     right:0;
     margin-left:auto;
     margin-right:auto;
-    height: 100px;
-    width: 100px;
-    background: red;
+    font-family: 'Roboto', sans-serif;
+}
+
+.topo-admin-quizzes{
+    height: 50px;
+    background: #8DA7BE;
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+    padding: 5px 10px 0 20px;
+}
+
+.container-cartas{
+    margin-top: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 900px;
+    margin: 60px auto;
+    flex-wrap: wrap;
+}
+
+.carta-adicionar-quizzes{
+    height: 200px;
+    width: 180px;
+    border: 1px solid transparent;
+    margin: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    background: #8DA7BE;
+}
+
+.cartas{
+    height: 200px;
+    width: 180px;
+    border: 1px solid rgba(55,55,55, 0.1);
+    margin: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    background: white;
+    color: black;
+}
+
+.cartas ion-icon, .carta-adicionar-quizzes ion-icon{
+    margin-top: 30px;
+    font-size: 35px;
 }
