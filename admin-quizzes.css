@@ -1,6 +1,6 @@
 .admin-quizzes{
-    visibility: hidden;
     position: absolute;
+    visibility: hidden;
     left:0;
     right:0;
     margin-left:auto;
@@ -20,7 +20,6 @@
 .container-cartas{
     margin-top: 60px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     max-width: 900px;
     margin: 60px auto;
@@ -61,4 +60,8 @@
 .cartas ion-icon, .carta-adicionar-quizzes ion-icon{
     margin-top: 30px;
     font-size: 35px;
+}
+
+.cartas p{
+    text-align: center;
 }

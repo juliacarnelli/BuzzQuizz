@@ -1,6 +1,6 @@
 .login{
-    visibility: hidden;
     position:absolute;
+    visibility: hidden;
     left:0;
     right:0;
     margin-left:auto;

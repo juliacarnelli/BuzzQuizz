@@ -1,6 +1,6 @@
 .criacao-quiz{
+   
     position: absolute;
-    /*visibility: hidden;*/
     left:0;
     right:0;
     top:0;
@@ -9,17 +9,21 @@
     font-family: 'Roboto', sans-serif;  
 }
 
-.perguntas{
+.perguntas, .niveis-perguntas{
     border-radius: 5px;
     width: 100%;
     background: #d5dfe5;
     padding: 10px;
+    margin-bottom: 20px;
 }
 
-.container-perguntas{
+.container-criar-quiz{
     width: 500px;
-    margin: 20px auto;
+    margin: 20px auto 50px auto;
     padding:20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .lista-perguntas, .niveis-acerto{
@@ -29,7 +33,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-bottom: 50px;
+    margin-bottom: 10px;
 }
 
 .enunciado-pergunta{
@@ -77,7 +81,7 @@
 }
 
 .adicionar-perguntas{
-    margin: 10px;
+    margin-bottom: 20px;
     font-size: 30px;
     color: #8DA7BE;
     
@@ -103,4 +107,18 @@
     font-weight: bold;
     background: #8DA7BE;
     border-radius: 5px;
+}
+
+.container-perguntas{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.niveis{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

@@ -29,33 +29,20 @@
                 <p>Novo</p>
                 <p>Quizz</p>
                 <ion-icon name="add-circle"></ion-icon>
-            </li>
-            <li class="cartas">
-                <p>Novo Quizz</p>
-            </li>
-            <li class="cartas">
-                <p>Novo Quizz</p>
-            </li>
-            <li class="cartas">
-                <p>Novo Quizz</p>
-            </li>
-            <li class="cartas">
-                <p>Novo Quizz</p>
-            </li>
-            
+            </li>            
         </ul>
     </section>
     <section class="criacao-quiz">
         <header class="topo-admin-quizzes">
             <h1>BuzzQuizz</h1>
         </header>
-        <div class="container-perguntas">
+        <div class="container-criar-quiz">
             <input placeholder="titulo" class="titulo">
+            <div class="container-perguntas">
             <ul class="lista-perguntas">
                 <li class="perguntas">
                     <p class="num-pergunta">Pergunta 1</p>
                     <input placeholder="Digite a Pergunta" class="enunciado-pergunta">
-                    <div class="container-resposta-e-imagem">
                         <div class="resposta-e-imagem">
                             <input type="text" placeholder="Digite a Resposta Correta" class="resposta-pergunta correta">
                             <input type="text" placeholder="Link imagem correta" class="resposta-pergunta correta">
@@ -72,12 +59,13 @@
                             <input type="text" placeholder="Digite a Resposta Errada 3" class="resposta-pergunta errada">
                             <input type="text" placeholder="Link imagem Errada 3" class="resposta-pergunta errada">
                         </div>
-                    </div>
                 </li>
-                <ion-icon name="add-circle" class="adicionar-perguntas" onclick="adicionarPerguntas();"></ion-icon>
             </ul>
+             <ion-icon name="add-circle" class="adicionar-perguntas" onclick="adicionarPerguntas();"></ion-icon>
+             </div>
+             <div class="niveis"> 
             <ul class="niveis-acerto">
-                <li class="perguntas">
+                <li class="niveis-perguntas">
                     <p class="num-pergunta">Nivel 1</p>
                     <div class="entre-acertos">
                         <input type="text" placeholder="Digite a Resposta Errada 3" class="resposta-pergunta">
@@ -87,9 +75,10 @@
                     <input placeholder="Digite a Pergunta" class="url-img-nivel">
                     <input placeholder="Digite a Pergunta" class="descricao-nivel">
                 </li>
-                <ion-icon name="add-circle" class="adicionar-perguntas" onclick="adicionarNiveis();"></ion-icon>
             </ul>
-            <button class="botao-criar-quiz" onclick="enviarQUizz()"> PUBLICAR</button>
+             <ion-icon name="add-circle" class="adicionar-perguntas" onclick="adicionarNiveis();"></ion-icon>
+            </div>
+            <button class="botao-criar-quiz" onclick="enviarQuiz()"> PUBLICAR</button>
         </div>
     </section>
     <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
