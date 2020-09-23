@@ -2,10 +2,25 @@ var token;
 var listaQuizzes = [];
 var listaPerguntas = [];
 
-var contadorPerguntas = 2;
-var contadorNiveis = 2;
+var contadorPerguntas = 1;
+var contadorNiveis = 1;
 
 var qqrcoisa;
+
+var responses = [];
+var values = [];
+var url = [];
+
+var enunciados = [];
+var enunciado;
+
+
+
+var body = {
+    "title": '',
+    "data": {
+    }
+}
 
 
 var data = {
@@ -15,7 +30,23 @@ var data = {
             "valor": "lalal",
             "url": "#",
             "correta": "1"//0 para incorretas 1 para correta
-        }]
+        },
+        {
+            "valor": "lalal",
+            "url": "#",
+            "correta": "0"//0 para incorretas 1 para correta
+        },
+        {
+            "valor": "lalal",
+            "url": "#",
+            "correta": "0"//0 para incorretas 1 para correta
+        },
+        {
+            "valor": "lalal",
+            "url": "#",
+            "correta": "0"//0 para incorretas 1 para correta
+        },
+        ]
     }
     ]
 }
@@ -131,12 +162,20 @@ function criarQuiz(){
     elemento.style.visibility = "visible";   
 }
 
+function finalizarQuiz(){
+    var elemento = document.querySelector(".admin-quizzes");
+    elemento.style.visibility = "visible";
+    elemento = document.querySelector(".criacao-quiz");
+    elemento.style.visibility = "hidden";   
+}
+
 function adicionarPerguntas (){
 
     var contadorRespostas = 1;
+    contadorPerguntas++;
     var container = document.querySelector(".lista-perguntas");
     var elemento = document.createElement("li");
-    elemento.innerHTML = "<p class='num-pergunta'>Pergunta "+ contadorPerguntas++ +"</p>";
+    elemento.innerHTML = "<p class='num-pergunta'>Pergunta "+ contadorPerguntas +"</p>";
     elemento.innerHTML += "<input placeholder='Digite a Pergunta' class='enunciado-pergunta'></input>";
     elemento.innerHTML += "<div class='resposta-e-imagem'><input type='text' placeholder='Digite a Resposta Correta' class='resposta-pergunta correta'><input type='text' placeholder='Link imagem correta' class='resposta-pergunta correta'></div>";
     while (contadorRespostas < 4){
@@ -151,9 +190,10 @@ function adicionarPerguntas (){
 
 function adicionarNiveis (){
 
+    contadorNiveis++;
     var container = document.querySelector(".niveis-acerto");
     var elemento = document.createElement("li");
-    elemento.innerHTML = "<p class='num-pergunta'>Nivel " + contadorNiveis++ +"</p>";
+    elemento.innerHTML = "<p class='num-pergunta'>Nivel " + contadorNiveis +"</p>";
     elemento.innerHTML += "<div class='entre-acertos'><input type='text' placeholder='Minima % de acerto do nível' class='resposta-pergunta'><input type='text' placeholder='Máxima % de acerto do nivel' class='resposta-pergunta'></div>";
     elemento.innerHTML += "<input placeholder='Titulo do Nivel' class='titulo-nivel'>";
     elemento.innerHTML += "<input placeholder='Link da imagem do nivel' class='url-img-nivel'>";
@@ -165,39 +205,53 @@ function adicionarNiveis (){
 }
 
 
-function pegarPergunta() {
-    return document.querySelector(".enunciado-pergunta").value;
+function pegarTitulo() {
+    return document.querySelector(".titulo").value;
 }
 
 function pegarResposta() {
-    var perg = 0;
-    var resp = 0;
     var elemento = document.querySelectorAll(".resposta-e-imagem input");
-
-        console.log( data);
-        console.log( data.perguntas[perg]);
-        console.log( data.perguntas[perg].respostas[resp]);
-        console.log( data.perguntas[perg].respostas[resp].valor);
-        console.log(elemento[0].value);
-    for(i=0; i<elemento.length; i++){
-        data.perguntas[perg].respostas[resp].valor = elemento[i++].value;
-        data.perguntas[perg].respostas[resp].url = elemento[i].value;
-        if(i === 2){
-            data.perguntas[perg].respostas[resp++].correta = 1;
-        } else{
-            data.perguntas[perg].respostas[resp++].correta = 0;
+        for(i=0; i<elemento.length; i++){
+            values.push(elemento[i].value);
+            i++;
+            url.push(elemento[i].value);
         }
-
-        if(resp === 3){
-            resp = 0;
-            perg++;
-        }
-    }
 }
  
 function enviarQuiz(){
-    for(var i = 1; i < contadorPerguntas; i++){
-        data.perguntas.titulo = pegarPergunta();
-    }
-    pegarResposta();
+   var titulo = pegarTitulo();
+   pegarResposta();
+   var contador = 0
+
+   body.title = titulo;
+
+   for(var i = 0; i < contadorPerguntas; i++){
+        listaPerguntas.push({});
+        for (var j = 0; j < 4; j++){
+            responses.push({});
+            responses[j].valor = values[contador];
+            responses[j].url = url[contador];
+            if (j === 0){
+                responses[j].correta = 1;
+            } else{
+                responses[j].correta = 0;
+            }
+            contador++;
+       }
+       listaPerguntas[i].enunciado = document.querySelectorAll(".enunciado-pergunta")[i].value;
+       listaPerguntas[i].respostas = responses;
+       responses = [];
+   }
+
+   body.data = listaPerguntas;
+   console.log(body);
+
+
+   
+
+
+
+
+   //finalizarQuiz();
+    
 }
