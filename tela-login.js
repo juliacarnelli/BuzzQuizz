@@ -11,6 +11,15 @@ var responses = [];
 var values = [];
 var url = [];
 
+var infoNiveis = [];
+
+var min = [];
+var max = [];
+var titulonivel = [];
+var urlnivel = [];
+var descnivel = [];
+
+
 var enunciados = [];
 var enunciado;
 
@@ -244,14 +253,47 @@ function enviarQuiz(){
    }
 
    body.data = listaPerguntas;
-   console.log(body);
 
 
-   
-
-
-
+   pegarMinMax();
+   pegarTituloNivel();
+   pegarURLNivel();
+   pegarDescricaoNivel();
 
    //finalizarQuiz();
     
+}
+
+
+function pegarMinMax(){
+    var elemento = document.querySelectorAll(".entre-acertos input");
+    for(i=0; i<elemento.length; i++){
+        min.push(elemento[i].value);
+        i++;
+        max.push(elemento[i].value);
+    }
+    console.log(min);
+    console.log(max);
+}
+function pegarTituloNivel(){
+    var elemento = document.querySelectorAll(".titulo-nivel");
+    for(i=0; i<elemento.length; i++){
+        titulonivel.push(elemento[i].value);
+    }
+    console.log(titulonivel);
+}
+function pegarURLNivel(){
+    var elemento = document.querySelectorAll(".url-img-nivel");
+    for(i=0; i<elemento.length; i++){
+        urlnivel.push(elemento[i].value);
+    }
+    console.log(urlnivel);
+
+}
+function pegarDescricaoNivel(){
+    var elemento = document.querySelectorAll(".descricao-nivel");
+    for(i=0; i<elemento.length; i++){
+        descnivel.push(elemento[i].value);
+    }
+    console.log(descnivel);
 }
