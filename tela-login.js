@@ -248,11 +248,12 @@ function enviarQuiz(){
             contador++;
        }
        listaPerguntas[i].enunciado = document.querySelectorAll(".enunciado-pergunta")[i].value;
-       listaPerguntas[i].respostas = responses;
+       listaPerguntas[i].opcoes = responses;
        responses = [];
    }
 
-   body.data = listaPerguntas;
+   body.data.respostas = listaPerguntas;
+
 
 
    pegarMinMax();
@@ -260,6 +261,19 @@ function enviarQuiz(){
    pegarURLNivel();
    pegarDescricaoNivel();
 
+   for(i = 0; i < contadorNiveis; i++){
+       infoNiveis.push({});
+       infoNiveis[i].min = min[i];
+       infoNiveis[i].max = max[i];
+       infoNiveis[i].tituloNivel = titulonivel[i];
+       infoNiveis[i].urlNivel = urlnivel[i];
+       infoNiveis[i].descNivel = descnivel[i];
+   }
+
+   body.data.niveis = infoNiveis;
+   console.log(body);
+   
+   
    //finalizarQuiz();
     
 }
@@ -272,22 +286,19 @@ function pegarMinMax(){
         i++;
         max.push(elemento[i].value);
     }
-    console.log(min);
-    console.log(max);
+
 }
 function pegarTituloNivel(){
     var elemento = document.querySelectorAll(".titulo-nivel");
     for(i=0; i<elemento.length; i++){
         titulonivel.push(elemento[i].value);
     }
-    console.log(titulonivel);
 }
 function pegarURLNivel(){
     var elemento = document.querySelectorAll(".url-img-nivel");
     for(i=0; i<elemento.length; i++){
         urlnivel.push(elemento[i].value);
     }
-    console.log(urlnivel);
 
 }
 function pegarDescricaoNivel(){
@@ -295,5 +306,4 @@ function pegarDescricaoNivel(){
     for(i=0; i<elemento.length; i++){
         descnivel.push(elemento[i].value);
     }
-    console.log(descnivel);
 }
