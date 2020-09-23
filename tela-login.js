@@ -4,6 +4,7 @@ var listaPerguntas = [];
 
 var contadorPerguntas = 1;
 var contadorNiveis = 1;
+var contadorQuizz = 0;
 
 var qqrcoisa;
 
@@ -24,7 +25,7 @@ var enunciados = [];
 var enunciado;
 
 
-
+var bodies = [];
 var body = {
     "title": '',
     "data": {
@@ -140,11 +141,9 @@ function pegarTestesUser(token){
 }
 
 function adicionarTestesUser(resposta){
-    console.log(resposta);
     for (var i = 0; i < resposta.data.length; i++){
         listaQuizzes.push(resposta.data);
     }
-    console.log(listaQuizzes);
     renderizarQuizzesAdmin();
 }
 
@@ -161,7 +160,6 @@ function renderizarQuizzesAdmin(){
         elemento.setAttribute("onclick", "abrirQuiz(this)")
         container.appendChild(elemento);
     }
-    console.log(listaQuizzes);
 }
 
 function criarQuiz(){
@@ -230,7 +228,8 @@ function pegarResposta() {
 function enviarQuiz(){
    var titulo = pegarTitulo();
    pegarResposta();
-   var contador = 0
+   var contador = 0;
+
 
    body.title = titulo;
 
@@ -271,13 +270,33 @@ function enviarQuiz(){
    }
 
    body.data.niveis = infoNiveis;
-   console.log(body);
+   bodies.push(body);
+   console.log(bodies);
    
+   registrarQuiz();
    
    //finalizarQuiz();
     
 }
 
+function registrarQuiz(){
+    var postQuiz = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v1/buzzquizz/quizzes", { body,
+        headers: {
+            'User-Token': token,
+            "Content-Type": "application/json"     
+        }
+    });
+    postQuiz.then(teste1).catch(teste2);
+
+}
+
+function teste1(resposta){
+    console.log("sucexo");
+}
+
+function teste2(resposta){
+    console.log("fail");
+}
 
 function pegarMinMax(){
     var elemento = document.querySelectorAll(".entre-acertos input");
