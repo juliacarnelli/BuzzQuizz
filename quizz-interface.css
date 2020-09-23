@@ -1,0 +1,19 @@
+.interface-container-teste{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.interface-pergunta{
+
+}
+
+.interface-container-respostas{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    background: rosybrown;
+}

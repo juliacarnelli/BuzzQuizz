@@ -66,8 +66,6 @@ var quiz = {
 	"data": data,
 }
 
-listaQuizzes.push(quiz);
-renderizarQuizzesAdmin();
 
 
 
@@ -141,18 +139,22 @@ function pegarTestesUser(token){
 }
 
 function adicionarTestesUser(resposta){
+    listaQuizzes = [];
+    console.log(resposta);
     for (var i = 0; i < resposta.data.length; i++){
-        listaQuizzes.push(resposta.data);
+        listaQuizzes.push(resposta.data[i]);
     }
-    renderizarQuizzesAdmin();
+    renderizarQuizzesAdmin(resposta);
 }
 
 function erroPegarTeste(erro){
     console.log(erro);
 }
 
-function renderizarQuizzesAdmin(){
+var tituloQuiz;
+function renderizarQuizzesAdmin(resposta){
     var container = document.querySelector(".container-cartas");
+    container.innerHTML = "<li class='carta-adicionar-quizzes' onclick='criarQuiz()'><p>Novo</p><p>Quizz</p><ion-icon name='add-circle'></ion-icon></li>";  
     for(var i = 0; i < listaQuizzes.length; i++){
         var elemento = document.createElement("li");
         elemento.innerHTML = "<p>" + listaQuizzes[i].title + "</p>"; 
@@ -170,6 +172,7 @@ function criarQuiz(){
 }
 
 function finalizarQuiz(){
+    pegarTestesUser(token);
     var elemento = document.querySelector(".admin-quizzes");
     elemento.style.visibility = "visible";
     elemento = document.querySelector(".criacao-quiz");
@@ -271,27 +274,26 @@ function enviarQuiz(){
 
    body.data.niveis = infoNiveis;
    bodies.push(body);
-   console.log(bodies);
    
    registrarQuiz();
    
-   //finalizarQuiz();
+    finalizarQuiz();
     
 }
 
 function registrarQuiz(){
-    var postQuiz = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v1/buzzquizz/quizzes", { body,
-        headers: {
+    var postQuiz = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v1/buzzquizz/quizzes", body,
+        {headers: {
             'User-Token': token,
             "Content-Type": "application/json"     
-        }
-    });
+}});
+
     postQuiz.then(teste1).catch(teste2);
 
 }
 
 function teste1(resposta){
-    console.log("sucexo");
+    console.log("elalala" + resposta.data);
 }
 
 function teste2(resposta){
