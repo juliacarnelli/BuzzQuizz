@@ -328,3 +328,39 @@ function pegarDescricaoNivel(){
         descnivel.push(elemento[i].value);
     }
 }
+
+function abrirQuiz(elemento){
+    console.log(listaQuizzes);
+    console.log(elemento.innerText);
+    var indice;
+    for(var i = 0; i< listaQuizzes.length; i++){
+        if(elemento.innerText === listaQuizzes[i].title){
+                indice = i;
+        } 
+    }
+
+    abrirTelaQuiz(indice);
+    
+}
+
+function abrirTelaQuiz (indice){
+    var elemento = document.querySelector(".admin-quizzes");
+    elemento.style.visibility = "hidden";
+    elemento = document.querySelector(".interface-quizz");
+    elemento.style.visibility = "visible"; 
+    elemento = document.querySelector(".interface-titulo h3");
+    elemento.innerText = listaQuizzes[indice].title;
+    elemento = document.querySelector(".interface-pergunta");
+    elemento.innerText = listaQuizzes[indice].data.respostas[0].enunciado;
+
+    var containerImg = document.querySelectorAll(".interface-resposta img");
+    var containerResp = document.querySelectorAll(".interface-resposta p");
+    for (var i = 0; i < 4; i++){//colocar aleatoriedade
+        console.log(containerImg[i]);
+        //containerImg[i].src = listaQuizzes[indice].data.respostas[0].opcoes[i].url;
+        containerImg[i].src = "beyonce.jpeg";
+        console.log(containerResp[i])
+        containerResp[i].innerText = listaQuizzes[indice].data.respostas[0].opcoes[i].valor;
+    }
+
+}
