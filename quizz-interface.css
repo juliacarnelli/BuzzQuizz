@@ -17,6 +17,14 @@
     font-size: 45px;
 }
 
+.correta{
+    background: #d4fcc3;
+}
+
+.errada{
+    background: #ffc9b9;
+}
+
 .interface-pergunta{
     width: 100%;
     height: 120px;

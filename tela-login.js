@@ -140,19 +140,17 @@ function pegarTestesUser(token){
 
 function adicionarTestesUser(resposta){
     listaQuizzes = [];
-    console.log(resposta);
     for (var i = 0; i < resposta.data.length; i++){
         listaQuizzes.push(resposta.data[i]);
     }
-    renderizarQuizzesAdmin(resposta);
+    renderizarQuizzesAdmin();
 }
 
 function erroPegarTeste(erro){
     console.log(erro);
 }
 
-var tituloQuiz;
-function renderizarQuizzesAdmin(resposta){
+function renderizarQuizzesAdmin(){
     var container = document.querySelector(".container-cartas");
     container.innerHTML = "<li class='carta-adicionar-quizzes' onclick='criarQuiz()'><p>Novo</p><p>Quizz</p><ion-icon name='add-circle'></ion-icon></li>";  
     for(var i = 0; i < listaQuizzes.length; i++){
@@ -328,39 +326,102 @@ function pegarDescricaoNivel(){
         descnivel.push(elemento[i].value);
     }
 }
-
+var indiceQuizz;
 function abrirQuiz(elemento){
-    console.log(listaQuizzes);
-    console.log(elemento.innerText);
-    var indice;
+    contadorPerguntas = 0;
     for(var i = 0; i< listaQuizzes.length; i++){
         if(elemento.innerText === listaQuizzes[i].title){
-                indice = i;
+                indiceQuizz = i;
         } 
     }
-
-    abrirTelaQuiz(indice);
-    
+    abrirTelaQuiz(); 
 }
-
-function abrirTelaQuiz (indice){
+var ordemPerguntas = 0;
+function abrirTelaQuiz (){
     var elemento = document.querySelector(".admin-quizzes");
     elemento.style.visibility = "hidden";
     elemento = document.querySelector(".interface-quizz");
     elemento.style.visibility = "visible"; 
     elemento = document.querySelector(".interface-titulo h3");
-    elemento.innerText = listaQuizzes[indice].title;
-    elemento = document.querySelector(".interface-pergunta");
-    elemento.innerText = listaQuizzes[indice].data.respostas[0].enunciado;
-
-    var containerImg = document.querySelectorAll(".interface-resposta img");
-    var containerResp = document.querySelectorAll(".interface-resposta p");
-    for (var i = 0; i < 4; i++){//colocar aleatoriedade
-        console.log(containerImg[i]);
-        //containerImg[i].src = listaQuizzes[indice].data.respostas[0].opcoes[i].url;
-        containerImg[i].src = "beyonce.jpeg";
-        console.log(containerResp[i])
-        containerResp[i].innerText = listaQuizzes[indice].data.respostas[0].opcoes[i].valor;
-    }
+    elemento.innerText = listaQuizzes[indiceQuizz].title;
+    renderizarEnunciado();
+    
+    contDistribuicao = 0;
+    k = 0;
+    distribuirRespostas();
 
 }
+
+function renderizarEnunciado(){
+    elemento = document.querySelector(".interface-pergunta");
+    elemento.innerText = listaQuizzes[indiceQuizz].data.respostas[ordemPerguntas].enunciado;
+    tornarFundoBranco();
+}
+
+function tornarFundoBranco(){
+    var containerImg = document.querySelectorAll(".interface-resposta");
+    for(i = 0; i < containerImg.length; i++){
+        containerImg[i].style.background = "white;"
+    }
+}
+
+var aleatoriedade = [0,0,0,0];
+var contDistribuicao = 0;
+var k = 0;
+var indiceCorreta;
+
+function distribuirRespostas(){
+    var containerImg = document.querySelectorAll(".interface-resposta img");
+    var containerResp = document.querySelectorAll(".interface-resposta p");
+    //for (var i = 0; i < 4; i++){//colocar aleatoriedade
+    var indiceAleatorio;
+    indiceCorreta = -1;
+    while(contDistribuicao < 4){
+        indiceAleatorio = getRandomIntInclusive(0,3);
+        console.log(indiceAleatorio);
+        if(aleatoriedade[indiceAleatorio] === 0){
+            //containerImg[i].src = listaQuizzes[indiceQuizz].data.respostas[ordemPerguntas].opcoes[i].url;
+            containerImg[k].src = "beyonce.jpeg";
+            containerResp[k].innerText = listaQuizzes[indiceQuizz].data.respostas[ordemPerguntas].opcoes[indiceAleatorio].valor;
+            if(listaQuizzes[indiceQuizz].data.respostas[ordemPerguntas].opcoes[indiceAleatorio].correta === 1){
+                indiceCorreta = indiceAleatorio;
+                console.log(indiceAleatorio);
+            }
+            aleatoriedade[indiceAleatorio] = 1;
+            contDistribuicao++;
+            k++;
+        }   
+    }      
+    //}
+}
+
+function proximaPergunta() {
+    aleatoriedade = [0,0,0,0];
+    contDistribuicao = 0;
+    k = 0;
+    ordemPerguntas++;
+    tornarVerdeouVermelho();
+    setTimeout(renderizarEnunciado, 2000)
+    setTimeout(distribuirRespostas, 2000);
+
+}
+
+function tornarVerdeouVermelho(){
+    var containerImg = document.querySelectorAll(".interface-resposta");
+    console.log(containerImg);
+    for(i = 0; i < containerImg.length; i++){
+        if(i === indiceCorreta){
+            containerImg[i].style.background = "#d4fcc3";
+        }
+        else{
+            containerImg[i].style.background = "#ffc9b9";
+        }
+    }
+}
+
+//funcao para gerar numero aleatorio; Auxiliar na distribuicao das respostas
+function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
