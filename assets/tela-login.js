@@ -180,6 +180,7 @@ function finalizarQuiz(){
     elemento.style.visibility = "visible";
     elemento = document.querySelector(".criacao-quiz");
     elemento.style.visibility = "hidden";  
+    window.scrollTo(0, 0);
 }
 
 function adicionarPerguntas (){
@@ -272,10 +273,7 @@ function enviarQuiz(){
             alert("ajeita os dados");
             dadosIncorretos = 1;
        }
-       else if(enun2.lastIndexOf("?") !== enun2[enun2.length - 1]){
-            alert("ajeita os dados");
-            dadosIncorretos = 1;
-       }
+       
 
        listaPerguntas[i].enunciado = enun2;
        listaPerguntas[i].opcoes = responses;

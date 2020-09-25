@@ -66,3 +66,10 @@
 .cartas p{
     text-align: center;
 }
+
+.delete-button{
+    position: relative;
+    bottom: 0;
+    font-size: 10px;
+    color: gray;
+}
