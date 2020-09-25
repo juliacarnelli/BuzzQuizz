@@ -377,6 +377,7 @@ function abrirQuiz(elemento){
 
 var ordemPerguntas = 0;
 function abrirTelaQuiz (){
+    window.scrollTo(0,0);
     var elemento = document.querySelector(".admin-quizzes");
     elemento.style.visibility = "hidden";
     elemento = document.querySelector(".interface-quizz");
