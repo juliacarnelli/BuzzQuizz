@@ -21,6 +21,7 @@
     margin-top: 60px;
     display: flex;
     align-items: center;
+    justify-content: center;
     max-width: 900px;
     margin: 60px auto;
     flex-wrap: wrap;

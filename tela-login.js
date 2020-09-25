@@ -219,13 +219,19 @@ function adicionarNiveis (){
 
 
 function pegarTitulo() {
-    return document.querySelector(".titulo").value;
+    var titulo = document.querySelector(".titulo").value;
+    titulo = titulo.trim();
+    var titulo2 = titulo.charAt(0).toUpperCase() + titulo.slice(1);
+    return titulo2;
 }
 
 function pegarResposta() {
     var elemento = document.querySelectorAll(".resposta-e-imagem input");
         for(i=0; i<elemento.length; i++){
-            values.push(elemento[i].value);
+            var valor = elemento[i].value;
+            valor = valor.trim();
+            var valor2 = valor.charAt(0).toUpperCase() + valor.slice(1);
+            values.push(valor2);
             i++;
             url.push(elemento[i].value);
         }
@@ -235,6 +241,7 @@ function enviarQuiz(){
    var titulo = pegarTitulo();
    pegarResposta();
    var contador = 0;
+   var dadosIncorretos = 0;
 
 
    body.title = titulo;
@@ -252,7 +259,25 @@ function enviarQuiz(){
             }
             contador++;
        }
-       listaPerguntas[i].enunciado = document.querySelectorAll(".enunciado-pergunta")[i].value;
+       var enun = document.querySelectorAll(".enunciado-pergunta")[i].value;
+       enun = enun.trim();
+       var enun2 = enun.charAt(0).toUpperCase() + enun.slice(1);
+       console.log("indice" + enun2.indexOf("?"));
+       console.log("ultimo indice" + enun2.lastIndexOf("?"));
+       if(enun2.lastIndexOf("?") == -1){
+           alert("ajeita os dados");
+           dadosIncorretos = 1;
+       }
+       else if (enun2.indexOf("?") !== enun2.lastIndexOf("?")){
+            alert("ajeita os dados");
+            dadosIncorretos = 1;
+       }
+       else if(enun2.lastIndexOf("?") !== enun2[enun2.length - 1]){
+            alert("ajeita os dados");
+            dadosIncorretos = 1;
+       }
+
+       listaPerguntas[i].enunciado = enun2;
        listaPerguntas[i].opcoes = responses;
        responses = [];
    }
@@ -277,10 +302,13 @@ function enviarQuiz(){
 
    body.data.niveis = infoNiveis;
    bodies.push(body);
-   
-   registrarQuiz();
-   
-   finalizarQuiz();
+
+   if(dadosIncorretos === 1 ){
+       criarQuiz();
+   } else{
+    registrarQuiz();
+    finalizarQuiz();
+   }
     
 }
 
@@ -315,7 +343,10 @@ function pegarMinMax(){
 function pegarTituloNivel(){
     var elemento = document.querySelectorAll(".titulo-nivel");
     for(i=0; i<elemento.length; i++){
-        titulonivel.push(elemento[i].value);
+        var titulo = elemento[i].value;
+        titulo = titulo.trim();
+        var titulo2 = titulo.charAt(0).toUpperCase() + titulo.slice(1);
+        titulonivel.push(titulo2);
     }
 }
 function pegarURLNivel(){
@@ -328,7 +359,10 @@ function pegarURLNivel(){
 function pegarDescricaoNivel(){
     var elemento = document.querySelectorAll(".descricao-nivel");
     for(i=0; i<elemento.length; i++){
-        descnivel.push(elemento[i].value);
+        var desc = elemento[i].value;
+        desc = desc.trim();
+        var desc2 = desc.charAt(0).toUpperCase() + desc.slice(1);
+        descnivel.push(desc2);
     }
 }
 
@@ -445,7 +479,6 @@ function qualNivel(){
             console.log(listaQuizzes[indiceQuizz].data.niveis[i]);
             renderizarInfoNivel(i);
         } else{
-            renderizarInfoNivel(i);
         }
     }
 }
@@ -473,6 +506,9 @@ var percentualAcerto;
 function calculoResultado(){
     console.log("perguntastotal" + listaQuizzes[indiceQuizz].data.respostas.length);
     percentualAcerto = acertosJogador * 100/listaQuizzes[indiceQuizz].data.respostas.length;
+    console.log(percentualAcerto);
+    percentualAcerto = Math.round(percentualAcerto);
+    console.log(percentualAcerto);
 }
 
 function tornarVerdeouVermelho(){

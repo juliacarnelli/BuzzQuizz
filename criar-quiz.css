@@ -122,3 +122,23 @@
     justify-content: center;
     align-items: center;
 }
+
+@media (max-width: 600px){
+    .resposta-e-imagem{
+        flex-direction: column;
+    }
+
+    .resposta-pergunta{
+        width: 100%;
+    }
+
+    .container-criar-quiz{
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+    }
+    .entre-acertos{
+        flex-direction: column;
+        width: 100%;
+    }
+}
