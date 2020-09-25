@@ -20,9 +20,13 @@ var titulonivel = [];
 var urlnivel = [];
 var descnivel = [];
 
+var acertosJogador = 0;
+
 
 var enunciados = [];
 var enunciado;
+
+var indiceQuizz;
 
 
 var bodies = [];
@@ -155,9 +159,10 @@ function renderizarQuizzesAdmin(){
     container.innerHTML = "<li class='carta-adicionar-quizzes' onclick='criarQuiz()'><p>Novo</p><p>Quizz</p><ion-icon name='add-circle'></ion-icon></li>";  
     for(var i = 0; i < listaQuizzes.length; i++){
         var elemento = document.createElement("li");
-        elemento.innerHTML = "<p>" + listaQuizzes[i].title + "</p>"; 
+        elemento.innerHTML = "<p id='' >" + listaQuizzes[i].title + "</p>"; 
         elemento.classList.add("cartas");
-        elemento.setAttribute("onclick", "abrirQuiz(this)")
+        elemento.setAttribute("onclick", "abrirQuiz(this)");
+        elemento.setAttribute("id", listaQuizzes[i].id);
         container.appendChild(elemento);
     }
 }
@@ -171,10 +176,10 @@ function criarQuiz(){
 
 function finalizarQuiz(){
     pegarTestesUser(token);
-    var elemento = document.querySelector(".admin-quizzes");
+     var elemento = document.querySelector(".admin-quizzes");
     elemento.style.visibility = "visible";
     elemento = document.querySelector(".criacao-quiz");
-    elemento.style.visibility = "hidden";   
+    elemento.style.visibility = "hidden";  
 }
 
 function adicionarPerguntas (){
@@ -275,7 +280,7 @@ function enviarQuiz(){
    
    registrarQuiz();
    
-    finalizarQuiz();
+   finalizarQuiz();
     
 }
 
@@ -326,16 +331,18 @@ function pegarDescricaoNivel(){
         descnivel.push(elemento[i].value);
     }
 }
-var indiceQuizz;
+
 function abrirQuiz(elemento){
     contadorPerguntas = 0;
-    for(var i = 0; i< listaQuizzes.length; i++){
-        if(elemento.innerText === listaQuizzes[i].title){
+    acertosJogador = 0;
+    for(var i = 0; i < listaQuizzes.length; i++){
+        if(elemento.id == listaQuizzes[i].id){
                 indiceQuizz = i;
         } 
     }
     abrirTelaQuiz(); 
 }
+
 var ordemPerguntas = 0;
 function abrirTelaQuiz (){
     var elemento = document.querySelector(".admin-quizzes");
@@ -355,60 +362,123 @@ function abrirTelaQuiz (){
 function renderizarEnunciado(){
     elemento = document.querySelector(".interface-pergunta");
     elemento.innerText = listaQuizzes[indiceQuizz].data.respostas[ordemPerguntas].enunciado;
-    tornarFundoBranco();
-}
-
-function tornarFundoBranco(){
-    var containerImg = document.querySelectorAll(".interface-resposta");
-    for(i = 0; i < containerImg.length; i++){
-        containerImg[i].style.background = "white;"
+    var container = document.querySelectorAll(".interface-resposta");
+    for(i = 0; i < container.length; i++){
+        container[i].style.background = "white";
     }
 }
 
 var aleatoriedade = [0,0,0,0];
-var contDistribuicao = 0;
-var k = 0;
 var indiceCorreta;
 
 function distribuirRespostas(){
     var containerImg = document.querySelectorAll(".interface-resposta img");
     var containerResp = document.querySelectorAll(".interface-resposta p");
-    //for (var i = 0; i < 4; i++){//colocar aleatoriedade
     var indiceAleatorio;
+    var contDistribuicao = 0;
+    var k = 0;
     indiceCorreta = -1;
     while(contDistribuicao < 4){
         indiceAleatorio = getRandomIntInclusive(0,3);
-        console.log(indiceAleatorio);
         if(aleatoriedade[indiceAleatorio] === 0){
-            //containerImg[i].src = listaQuizzes[indiceQuizz].data.respostas[ordemPerguntas].opcoes[i].url;
-            containerImg[k].src = "beyonce.jpeg";
+            containerImg[k].src = listaQuizzes[indiceQuizz].data.respostas[ordemPerguntas].opcoes[indiceAleatorio].url;
             containerResp[k].innerText = listaQuizzes[indiceQuizz].data.respostas[ordemPerguntas].opcoes[indiceAleatorio].valor;
             if(listaQuizzes[indiceQuizz].data.respostas[ordemPerguntas].opcoes[indiceAleatorio].correta === 1){
-                indiceCorreta = indiceAleatorio;
-                console.log(indiceAleatorio);
+                indiceCorreta = k;
             }
             aleatoriedade[indiceAleatorio] = 1;
             contDistribuicao++;
             k++;
         }   
     }      
-    //}
 }
 
-function proximaPergunta() {
+contadorAuxiliar = 0;
+
+function proximaPergunta(elemento) {
     aleatoriedade = [0,0,0,0];
     contDistribuicao = 0;
     k = 0;
     ordemPerguntas++;
+    elemento.setAttribute("id", "escolhida");
+    conferirAcertos();
     tornarVerdeouVermelho();
-    setTimeout(renderizarEnunciado, 2000)
-    setTimeout(distribuirRespostas, 2000);
+    if(contadorAuxiliar < listaQuizzes[indiceQuizz].data.respostas.length - 1){
+        setTimeout(renderizarEnunciado, 2000)
+        setTimeout(distribuirRespostas, 2000);
+        contadorAuxiliar++;
+    }
+    else{
+        setTimeout(abrirResultado,2000);
+    }
 
+    elemento.setAttribute("id", "");
+
+}
+
+var opcoesEscolhidas;
+
+function conferirAcertos(){
+    opcoesEscolhidas = -1;
+    var elemento = document.querySelectorAll(".interface-resposta");
+    for (var i = 0; i < elemento.length; i++){
+        if(elemento[i].id == "escolhida"){
+            opcoesEscolhidas = i;
+        }
+    }
+}
+
+function abrirResultado(){
+    calculoResultado();
+    var elemento = document.querySelector(".results");
+    elemento.style.visibility = "visible";
+    elemento = document.querySelector(".interface-quizz");
+    elemento.style.visibility = "hidden";  
+    qualNivel();
+}
+
+function qualNivel(){
+    for (var i = 0; i < listaQuizzes[indiceQuizz].data.niveis.length; i++){
+        console.log(i);
+        console.log(listaQuizzes[indiceQuizz].data.niveis[i]);
+        if(percentualAcerto >= listaQuizzes[indiceQuizz].data.niveis[i].min && percentualAcerto <= listaQuizzes[indiceQuizz].data.niveis[i].max){
+            console.log(listaQuizzes[indiceQuizz].data.niveis[i]);
+            renderizarInfoNivel(i);
+        } else{
+            renderizarInfoNivel(i);
+        }
+    }
+}
+
+function renderizarInfoNivel(indice){
+    var elemento = document.querySelector(".titulo-resposta h3");
+    elemento.innerText = listaQuizzes[indiceQuizz].title;
+
+    elemento = document.querySelector(".acertos");
+    elemento.innerHTML = "<p>Você acertou " + acertosJogador + " de " + listaQuizzes[indiceQuizz].data.respostas.length + " perguntas!</p><p>Score: " + percentualAcerto + "%</p>";
+    
+    elemento = document.querySelector(".texto-resposta-resultado h4");
+    elemento.innerText = listaQuizzes[indiceQuizz].data.niveis[indice].tituloNivel;
+
+    elemento = document.querySelector(".texto-resposta-resultado p");
+    elemento.innerText = listaQuizzes[indiceQuizz].data.niveis[indice].descNivel;
+
+    elemento = document.querySelector(".foto-resultado");
+    //elemento.innerText = listaQuizzes[indiceQuizz].data.niveis[indice].descNivel;
+    elemento.setAttribute("src", listaQuizzes[indiceQuizz].data.niveis[indice].urlNivel);
+}
+
+var percentualAcerto;
+
+function calculoResultado(){
+    console.log("perguntastotal" + listaQuizzes[indiceQuizz].data.respostas.length);
+    percentualAcerto = acertosJogador * 100/listaQuizzes[indiceQuizz].data.respostas.length;
 }
 
 function tornarVerdeouVermelho(){
     var containerImg = document.querySelectorAll(".interface-resposta");
-    console.log(containerImg);
+    console.log("indiceCorreta", indiceCorreta);
+    console.log("OPCOEsescolhidas", opcoesEscolhidas);
     for(i = 0; i < containerImg.length; i++){
         if(i === indiceCorreta){
             containerImg[i].style.background = "#d4fcc3";
@@ -416,6 +486,10 @@ function tornarVerdeouVermelho(){
         else{
             containerImg[i].style.background = "#ffc9b9";
         }
+    }
+    if(opcoesEscolhidas === indiceCorreta){
+        acertosJogador++;
+        console.log("acertos jogador" + acertosJogador);
     }
 }
 
